@@ -7,6 +7,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import com.mahmoud.composecharts.barchart.BarChart
 import com.mahmoud.composechartssamples.ui.theme.AndroidComposeChartsTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,16 +17,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidComposeChartsTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-
+                    BarChart(
+                        barChartData = barChartData,
+                        verticalAxisValues = verticalAxisValues,
+                    )
                 }
             }
         }
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+private fun DefaultPreview() {
+    AndroidComposeChartsTheme {
+        BarChart(
+            barChartData = barChartData,
+            verticalAxisValues = verticalAxisValues,
+//            axisColor = Color(0xFFA6A6A6),
+//            verticalAxisLabelColor = Color(0xFFA6A6A6),
+//            horizontalAxisLabelColor = Color(0xFF4F4F4F),
+//            horizontalAxisLabelFontSize = 20.sp,
+//            isShowVerticalAxis = false
+        )
+    }
 }

@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
 }
 
@@ -7,7 +7,6 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.mahmoud.composecharts"
         minSdk 21
         targetSdk 31
         versionCode 1

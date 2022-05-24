@@ -1,13 +1,8 @@
-package com.mahmoud.composecharts
+package com.mahmoud.composecharts.barchart
 
 import android.graphics.Paint
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -23,42 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mahmoud.composecharts.ui.theme.AndroidComposeChartsTheme
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AndroidComposeChartsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    val barChartEntities = ArrayList<BarChartEntity>()
-                    barChartEntities.add(BarChartEntity(200.0f, Color.Red))
-                    barChartEntities.add(BarChartEntity(250.0f, Color.Blue))
-                    barChartEntities.add(BarChartEntity(300.0f, Color.Black))
-                    barChartEntities.add(BarChartEntity(400.0f, Color.Yellow))
-                    barChartEntities.add(BarChartEntity(150.0f, Color.Green))
-
-//                    BarChart(
-//                        barChartData = barChartEntities,
-//                        verticalAxisValues = listOf(0.0, 100.0, 200.0, 300.0, 400.0, 500.0)
-//                    )
-                }
-            }
-        }
-    }
-}
-
-data class BarChartEntity(
-    val value: Float,
-    val color: Color,
-    val label: String? = ""
-)
-
-@Composable
-private fun dpToPx(value: Dp): Float = LocalDensity.current.run { value.toPx() }
-////
 @Composable
 fun BarChart(
-    modifier: Modifier? = null,
+    modifier: Modifier? = Modifier
+        .aspectRatio(1f)
+        .padding(top = 16.dp, bottom = 8.dp),
+
     barChartData: List<BarChartEntity>,
     verticalAxisValues: List<Float>,
 
@@ -78,7 +43,7 @@ fun BarChart(
     val paddingBetweenBarsPx = dpToPx(paddingBetweenBars)
 
     Canvas(
-        modifier = modifier?: Modifier.aspectRatio(1f).padding(top = 12.dp, bottom = 12.dp)
+        modifier = modifier!!
     ) {
         val axisThickness = 5.0f
 
@@ -175,6 +140,8 @@ fun BarChart(
     }
 }
 
+@Composable
+private fun dpToPx(value: Dp): Float = LocalDensity.current.run { value.toPx() }
 
 @Preview(showBackground = true)
 @Composable
@@ -189,12 +156,12 @@ private fun DefaultPreview() {
 
         BarChart(
             barChartData = barChartData,
-            verticalAxisValues = listOf(0.0f, 100.0f, 200.0f, 300.0f, 400.0f, 500.0f, 600.0f),
-            axisColor = Color(0xFFA6A6A6),
-            verticalAxisLabelColor = Color(0xFFA6A6A6),
-            horizontalAxisLabelColor = Color(0xFF4F4F4F),
-            horizontalAxisLabelFontSize = 32.sp,
-            isShowVerticalAxis = false
+            verticalAxisValues = listOf(0.0f, 100.0f, 200.0f, 300.0f, 400.0f, 500.0f),
+//            axisColor = Color(0xFFA6A6A6),
+//            verticalAxisLabelColor = Color(0xFFA6A6A6),
+//            horizontalAxisLabelColor = Color(0xFF4F4F4F),
+//            horizontalAxisLabelFontSize = 20.sp,
+//            isShowVerticalAxis = false
         )
     }
 }
