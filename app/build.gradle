@@ -48,8 +48,8 @@ android {
 }
 
 dependencies {
-    implementation project(":compose-charts")
-//    implementation 'com.mahmoud.composecharts:compose-charts:0.0.3'
+//    implementation project(":compose-charts")
+    implementation 'com.github.MahmoudIbrahim3:android-compose-charts:0.0.5'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

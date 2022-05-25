@@ -5,10 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.mahmoud.composecharts.barchart.BarChart
 import com.mahmoud.composechartssamples.ui.theme.AndroidComposeChartsTheme
 
@@ -30,16 +30,49 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-private fun DefaultPreview() {
+private fun Preview_Default() {
     AndroidComposeChartsTheme {
         BarChart(
             barChartData = barChartData,
+            verticalAxisValues = verticalAxisValues
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview_2Bars() {
+    AndroidComposeChartsTheme {
+        BarChart(
+            barChartData = barChartData2,
+            verticalAxisValues = verticalAxisValues
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview_CustomAttributes() {
+    AndroidComposeChartsTheme {
+        BarChart(
+            barChartData = barChartData3,
             verticalAxisValues = verticalAxisValues,
-//            axisColor = Color(0xFFA6A6A6),
-//            verticalAxisLabelColor = Color(0xFFA6A6A6),
-//            horizontalAxisLabelColor = Color(0xFF4F4F4F),
-//            horizontalAxisLabelFontSize = 20.sp,
-//            isShowVerticalAxis = false
+            axisColor = Color.Red,
+            verticalAxisLabelColor = Color.Blue,
+            horizontalAxisLabelColor = Color.Magenta,
+            horizontalAxisLabelFontSize = 20.sp,
+            isShowVerticalAxis = true
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Default_10BarsWithNoLabels() {
+    AndroidComposeChartsTheme {
+        BarChart(
+            barChartData = barChartData4,
+            verticalAxisValues = verticalAxisValues2,
         )
     }
 }
