@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mahmoud.composecharts.barchart.BarChart
 import com.mahmoud.composechartssamples.ui.theme.AndroidComposeChartsTheme
@@ -59,9 +60,12 @@ private fun Preview_CustomAttributes() {
             verticalAxisValues = verticalAxisValues,
             axisColor = Color.Red,
             verticalAxisLabelColor = Color.Blue,
+            verticalAxisLabelFontSize = 20.sp,
             horizontalAxisLabelColor = Color.Magenta,
-            horizontalAxisLabelFontSize = 20.sp,
-            isShowVerticalAxis = true
+            horizontalAxisLabelFontSize = 24.sp,
+            paddingBetweenBars = 16.dp,
+            isShowVerticalAxis = true,
+            isShowHorizontalLines = false,
         )
     }
 }

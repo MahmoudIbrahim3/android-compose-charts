@@ -23,20 +23,14 @@ fun BarChart(
     modifier: Modifier? = Modifier
         .aspectRatio(1f)
         .padding(top = 16.dp, bottom = 8.dp),
-
     barChartData: List<BarChartEntity>,
     verticalAxisValues: List<Float>,
-
     axisColor: Color = Color(0xFFBFC0BF),
-
     horizontalAxisLabelColor: Color = Color(0xFF5B5E5B),
     horizontalAxisLabelFontSize: TextUnit = 16.sp,
-
     verticalAxisLabelColor: Color = Color(0xFF5B5E5B),
     verticalAxisLabelFontSize: TextUnit = 16.sp,
-
     paddingBetweenBars: Dp = 12.dp,
-
     isShowVerticalAxis: Boolean = false,
     isShowHorizontalLines: Boolean = true,
 ) {
