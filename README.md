@@ -14,7 +14,7 @@ This is an open source library used to draw charts in Android with [Jetpack Comp
 * Add this dependency to your app `gradle` file:
 
   ```kotlin
-  implementation 'com.github.MahmoudIbrahim3:android-compose-charts:<latest-version>'
+  implementation 'com.github.MahmoudIbrahim3:android-compose-charts:<latest-release>'
   ```
 
 ### 1. Bar Chart:
