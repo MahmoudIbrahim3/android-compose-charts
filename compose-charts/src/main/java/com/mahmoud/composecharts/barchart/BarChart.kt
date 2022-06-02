@@ -21,8 +21,7 @@ import com.mahmoud.composecharts.ui.theme.AndroidComposeChartsTheme
 @Composable
 fun BarChart(
     modifier: Modifier? = Modifier
-        .aspectRatio(1f)
-        .padding(top = 16.dp, bottom = 8.dp),
+        .padding(top = 16.dp, bottom = 16.dp),
     barChartData: List<BarChartEntity>,
     verticalAxisValues: List<Float>,
     axisColor: Color = Color(0xFFBFC0BF),
@@ -37,12 +36,12 @@ fun BarChart(
     val paddingBetweenBarsPx = dpToPx(paddingBetweenBars)
 
     Canvas(
-        modifier = modifier!!
+        modifier = modifier!!.aspectRatio(1f)
     ) {
         val axisThickness = 5.0f
 
         val bottomAreaHeight = horizontalAxisLabelFontSize.toPx()
-        val leftAreaWidth = verticalAxisValues[verticalAxisValues.size - 1].toString().length * 35
+        val leftAreaWidth = verticalAxisValues[verticalAxisValues.size - 1].toString().length * 25
 
         val verticalAxisLength = (size.height - bottomAreaHeight)
         val horizontalAxisLength = size.width - leftAreaWidth
@@ -50,11 +49,12 @@ fun BarChart(
         val distanceBetweenVerticalAxisValues = (verticalAxisLength / (verticalAxisValues.size - 1))
 
         // Draw horizontal axis
-        drawRect(
-            color = axisColor,
-            topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
-            size = Size(horizontalAxisLength, axisThickness)
-        )
+        if(isShowHorizontalLines.not())
+            drawRect(
+                color = axisColor,
+                topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
+                size = Size(horizontalAxisLength, axisThickness / 2)
+            )
 
         // Draw vertical axis
         if(isShowVerticalAxis)
@@ -155,7 +155,7 @@ private fun DefaultPreview() {
 //            verticalAxisLabelColor = Color(0xFFA6A6A6),
 //            horizontalAxisLabelColor = Color(0xFF4F4F4F),
 //            horizontalAxisLabelFontSize = 20.sp,
-//            isShowVerticalAxis = false
+//            isShowVerticalAxis = false,
         )
     }
 }
