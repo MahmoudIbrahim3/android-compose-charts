@@ -62,3 +62,17 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.mahmoud.composecharts'
+                artifactId = 'compose-charts'
+                version = '1.0.1'
+            }
+        }
+    }
+}
