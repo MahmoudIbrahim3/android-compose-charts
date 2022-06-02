@@ -4,8 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidComposeCharts">
+        android:supportsRtl="true">
 
     </application>
 
