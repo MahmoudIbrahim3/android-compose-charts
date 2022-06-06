@@ -1,10 +1,10 @@
-package com.mahmoud.composechartssamples
+package com.mahmoud.composechartssamples.data
 
 import androidx.compose.ui.graphics.Color
 import com.mahmoud.composecharts.barchart.BarChartEntity
 
 val barChartData = listOf(
-    BarChartEntity(150.0f, Color(0xFF618A32), "1"),
+    BarChartEntity(200.0f, Color(0xFF618A32), "1"),
     BarChartEntity(450.0f, Color(0xFFC32A33), "2"),
     BarChartEntity(300.0f, Color.Blue, "3"),
     BarChartEntity(150.0f, Color.Cyan, "4"),
@@ -23,16 +23,16 @@ val barChartData3 = listOf(
 )
 
 val barChartData4 = listOf(
-    BarChartEntity(3.0f, Color(0xFFC32A33), ""),
-    BarChartEntity(5.0f, Color.Blue, ""),
-    BarChartEntity(2.0f, Color.DarkGray, ""),
-    BarChartEntity(8.0f, Color.Cyan, ""),
-    BarChartEntity(2.0f, Color.Magenta, ""),
-    BarChartEntity(9.0f, Color(0xFFC32A33), ""),
-    BarChartEntity(0.5f, Color.LightGray, ""),
-    BarChartEntity(10.0f, Color.Green, ""),
-    BarChartEntity(4.0f, Color.Gray, ""),
-    BarChartEntity(7.0f, Color(0xFF618A32), ""),
+    BarChartEntity(3.0f, Color(0xFFC32A33), "1"),
+    BarChartEntity(5.0f, Color.Blue, "2"),
+    BarChartEntity(2.0f, Color.DarkGray, "3"),
+    BarChartEntity(8.0f, Color.Cyan, "4"),
+    BarChartEntity(2.0f, Color.Magenta, "5"),
+    BarChartEntity(9.0f, Color(0xFFC32A33), "6"),
+    BarChartEntity(0.5f, Color.LightGray, "7"),
+    BarChartEntity(10.0f, Color.Green, "8"),
+    BarChartEntity(4.0f, Color.Gray, "9"),
+    BarChartEntity(7.0f, Color(0xFF618A32), "10"),
 )
 
 val verticalAxisValues = listOf(0.0f, 100.0f, 200.0f, 300.0f, 400.0f, 500.0f)

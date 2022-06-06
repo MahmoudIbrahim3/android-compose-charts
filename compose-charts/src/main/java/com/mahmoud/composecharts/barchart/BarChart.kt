@@ -15,8 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.mahmoud.composecharts.ui.theme.AndroidComposeChartsTheme
+import com.mahmoud.composecharts.dpToPx
+import com.mahmoud.composecharts.ui.theme.*
 
 @Composable
 fun BarChart(
@@ -24,24 +24,25 @@ fun BarChart(
         .padding(top = 16.dp, bottom = 16.dp),
     barChartData: List<BarChartEntity>,
     verticalAxisValues: List<Float>,
-    axisColor: Color = Color(0xFFBFC0BF),
-    horizontalAxisLabelColor: Color = Color(0xFF5B5E5B),
-    horizontalAxisLabelFontSize: TextUnit = 16.sp,
-    verticalAxisLabelColor: Color = Color(0xFF5B5E5B),
-    verticalAxisLabelFontSize: TextUnit = 16.sp,
+    axisColor: Color = DefaultAxisColor,
+    horizontalAxisLabelColor: Color = DefaultAxisLabelColor,
+    horizontalAxisLabelFontSize: TextUnit = DefaultAxisLabelFontSize,
+    verticalAxisLabelColor: Color = DefaultAxisLabelColor,
+    verticalAxisLabelFontSize: TextUnit = DefaultAxisLabelFontSize,
     paddingBetweenBars: Dp = 12.dp,
     isShowVerticalAxis: Boolean = false,
     isShowHorizontalLines: Boolean = true,
 ) {
     val paddingBetweenBarsPx = dpToPx(paddingBetweenBars)
+    val axisThicknessPx = dpToPx(DefaultAxisThickness)
 
     Canvas(
         modifier = modifier!!.aspectRatio(1f)
     ) {
-        val axisThickness = 5.0f
 
         val bottomAreaHeight = horizontalAxisLabelFontSize.toPx()
-        val leftAreaWidth = verticalAxisValues[verticalAxisValues.size - 1].toString().length * 25
+        val leftAreaWidth =
+            (verticalAxisValues[verticalAxisValues.size - 1].toString().length * verticalAxisLabelFontSize.toPx().div(1.75)).toInt()
 
         val verticalAxisLength = (size.height - bottomAreaHeight)
         val horizontalAxisLength = size.width - leftAreaWidth
@@ -53,7 +54,7 @@ fun BarChart(
             drawRect(
                 color = axisColor,
                 topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
-                size = Size(horizontalAxisLength, axisThickness / 2)
+                size = Size(horizontalAxisLength, axisThicknessPx / 2)
             )
 
         // Draw vertical axis
@@ -61,7 +62,7 @@ fun BarChart(
             drawRect(
                 color = axisColor,
                 topLeft = Offset(leftAreaWidth.toFloat(), 0.0f),
-                size = Size(axisThickness, verticalAxisLength)
+                size = Size(axisThicknessPx, verticalAxisLength)
             )
 
         // Draw vertical axis values & horizontal lines
@@ -89,7 +90,7 @@ fun BarChart(
                 drawRect(
                     color = axisColor,
                     topLeft = Offset(leftAreaWidth.toFloat(), y),
-                    size = Size(horizontalAxisLength, axisThickness / 2)
+                    size = Size(horizontalAxisLength, axisThicknessPx / 2)
                 )
         }
 
@@ -133,9 +134,6 @@ fun BarChart(
         }
     }
 }
-
-@Composable
-private fun dpToPx(value: Dp): Float = LocalDensity.current.run { value.toPx() }
 
 @Preview(showBackground = true)
 @Composable

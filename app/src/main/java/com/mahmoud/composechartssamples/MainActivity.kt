@@ -11,6 +11,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mahmoud.composecharts.barchart.BarChart
+import com.mahmoud.composecharts.linechart.LineChart
+import com.mahmoud.composechartssamples.data.*
 import com.mahmoud.composechartssamples.ui.theme.AndroidComposeChartsTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,9 +31,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Bar Chart Previews
+ */
 @Preview(showBackground = true)
 @Composable
-private fun Preview_Default() {
+private fun Preview_BarChart_Default() {
     AndroidComposeChartsTheme {
         BarChart(
             barChartData = barChartData,
@@ -42,7 +47,7 @@ private fun Preview_Default() {
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview_2Bars() {
+private fun Preview_BarChart_2Bars() {
     AndroidComposeChartsTheme {
         BarChart(
             barChartData = barChartData2,
@@ -53,7 +58,7 @@ private fun Preview_2Bars() {
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview_CustomAttributes() {
+private fun Preview_BarChart_CustomAttributes() {
     AndroidComposeChartsTheme {
         BarChart(
             barChartData = barChartData3,
@@ -72,11 +77,45 @@ private fun Preview_CustomAttributes() {
 
 @Preview(showBackground = true)
 @Composable
-private fun Default_10BarsWithNoLabels() {
+private fun Default_BarChart_10BarsWithNoLabels() {
     AndroidComposeChartsTheme {
         BarChart(
             barChartData = barChartData4,
             verticalAxisValues = verticalAxisValues2,
+        )
+    }
+}
+
+/**
+ * Line Chart Previews
+ */
+@Preview(showBackground = true)
+@Composable
+private fun Preview_LineChart_Default() {
+    AndroidComposeChartsTheme {
+        LineChart(
+            lineChartData = lineChartData,
+            verticalAxisValues = verticalAxisValues
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview_LineChart_CustomAttributes() {
+    AndroidComposeChartsTheme {
+        LineChart(
+            lineChartData = lineChartData2,
+            verticalAxisValues = verticalAxisValues2,
+            lineColor = Color.Black,
+            strokeWidth = 7.dp,
+            axisColor = Color(0xFFC32A33),
+            verticalAxisLabelColor = Color.Blue,
+            verticalAxisLabelFontSize = 20.sp,
+            horizontalAxisLabelColor = Color.Red,
+            horizontalAxisLabelFontSize = 20.sp,
+            isShowVerticalAxis = true,
+            isShowHorizontalLines = true,
         )
     }
 }

@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mahmoud.composecharts.ui.theme.AndroidComposeChartsTheme
+import com.mahmoud.composecharts.dpToPx
+import com.mahmoud.composecharts.ui.theme.*
 
 @Composable
 fun LineChart(
@@ -24,23 +25,26 @@ fun LineChart(
         .padding(top = 16.dp, bottom = 16.dp),
     lineChartData: List<LineChartEntity>,
     verticalAxisValues: List<Float>,
-    axisColor: Color = Color(0xFFBFC0BF),
-    horizontalAxisLabelColor: Color = Color(0xFF5B5E5B),
-    horizontalAxisLabelFontSize: TextUnit = 16.sp,
-    verticalAxisLabelColor: Color = Color(0xFF5B5E5B),
-    verticalAxisLabelFontSize: TextUnit = 16.sp,
+    axisColor: Color = DefaultAxisColor,
+    horizontalAxisLabelColor: Color = DefaultAxisLabelColor,
+    horizontalAxisLabelFontSize: TextUnit = DefaultAxisLabelFontSize,
+    verticalAxisLabelColor: Color = DefaultAxisLabelColor,
+    verticalAxisLabelFontSize: TextUnit = DefaultAxisLabelFontSize,
     isShowVerticalAxis: Boolean = false,
     isShowHorizontalLines: Boolean = true,
-    strokeWidth: Float = 10F,
+    strokeWidth: Dp = 4.dp,
     lineColor: Color = Color.Blue,
-    ) {
+) {
+    val strokeWidthPx = dpToPx(strokeWidth)
+    val axisThicknessPx = dpToPx(DefaultAxisThickness)
+
     Canvas(
         modifier = modifier!!.aspectRatio(1f)
     ) {
-        val axisThickness = 5.0f
 
         val bottomAreaHeight = horizontalAxisLabelFontSize.toPx()
-        val leftAreaWidth = verticalAxisValues[verticalAxisValues.size - 1].toString().length * 25
+        val leftAreaWidth =
+            (verticalAxisValues[verticalAxisValues.size - 1].toString().length * verticalAxisLabelFontSize.toPx().div(1.75)).toInt()
 
         val verticalAxisLength = (size.height - bottomAreaHeight)
         val horizontalAxisLength = size.width - leftAreaWidth
@@ -48,19 +52,19 @@ fun LineChart(
         val distanceBetweenVerticalAxisValues = (verticalAxisLength / (verticalAxisValues.size - 1))
 
         // Draw horizontal axis
-        if(isShowHorizontalLines.not())
+        if (isShowHorizontalLines.not())
             drawRect(
                 color = axisColor,
                 topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
-                size = Size(horizontalAxisLength, axisThickness / 2)
+                size = Size(horizontalAxisLength, axisThicknessPx / 2)
             )
 
         // Draw vertical axis
-        if(isShowVerticalAxis)
+        if (isShowVerticalAxis)
             drawRect(
                 color = axisColor,
                 topLeft = Offset(leftAreaWidth.toFloat(), 0.0f),
-                size = Size(axisThickness, verticalAxisLength)
+                size = Size(axisThicknessPx, verticalAxisLength)
             )
 
         // Draw vertical axis values & horizontal lines
@@ -88,11 +92,11 @@ fun LineChart(
                 drawRect(
                     color = axisColor,
                     topLeft = Offset(leftAreaWidth.toFloat(), y),
-                    size = Size(horizontalAxisLength, axisThickness / 2)
+                    size = Size(horizontalAxisLength, axisThicknessPx / 2)
                 )
         }
 
-        // Draw bars and it's labels
+        // Draw lines and it's labels
         val barWidth =
             (drawContext.size.width - leftAreaWidth) / lineChartData.size
 
@@ -118,16 +122,16 @@ fun LineChart(
             drawCircle(
                 color = lineColor,
                 center = end,
-                radius = strokeWidth.times(1.5f)
+                radius = strokeWidthPx.times(1.5f)
             )
 
-            if(previousOffset != null) {
+            if (previousOffset != null) {
                 val start = Offset(previousOffset.x + barWidth.div(2), previousOffset.y)
                 drawLine(
                     start = start,
                     end = end,
                     color = lineColor,
-                    strokeWidth = strokeWidth
+                    strokeWidth = strokeWidthPx
                 )
             }
 
@@ -170,9 +174,6 @@ private fun calculateOffset(
     return Offset(x, y)
 }
 
-@Composable
-private fun dpToPx(value: Dp): Float = LocalDensity.current.run { value.toPx() }
-
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
@@ -181,7 +182,7 @@ private fun DefaultPreview() {
         lineChartData.add(LineChartEntity(150.0f, "1"))
         lineChartData.add(LineChartEntity(450.0f, "2"))
         lineChartData.add(LineChartEntity(300.0f, "3"))
-        lineChartData.add(LineChartEntity(200.0f,  "4"))
+        lineChartData.add(LineChartEntity(200.0f, "4"))
         lineChartData.add(LineChartEntity(500.0f, "5"))
 
         LineChart(
@@ -191,6 +192,8 @@ private fun DefaultPreview() {
 //            verticalAxisLabelColor = Color(0xFFA6A6A6),
 //            horizontalAxisLabelColor = Color(0xFF4F4F4F),
 //            isShowVerticalAxis = false,
+            verticalAxisLabelFontSize = 20.sp,
+            horizontalAxisLabelFontSize = 30.sp
         )
     }
 }
