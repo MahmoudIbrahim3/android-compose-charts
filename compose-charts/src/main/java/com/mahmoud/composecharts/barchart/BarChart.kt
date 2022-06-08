@@ -54,7 +54,7 @@ fun BarChart(
             drawRect(
                 color = axisColor,
                 topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
-                size = Size(horizontalAxisLength, axisThicknessPx / 2)
+                size = Size(horizontalAxisLength, axisThicknessPx)
             )
 
         // Draw vertical axis
@@ -90,7 +90,7 @@ fun BarChart(
                 drawRect(
                     color = axisColor,
                     topLeft = Offset(leftAreaWidth.toFloat(), y),
-                    size = Size(horizontalAxisLength, axisThicknessPx / 2)
+                    size = Size(horizontalAxisLength, axisThicknessPx)
                 )
         }
 

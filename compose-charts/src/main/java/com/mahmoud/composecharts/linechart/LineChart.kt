@@ -56,7 +56,7 @@ fun LineChart(
             drawRect(
                 color = axisColor,
                 topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
-                size = Size(horizontalAxisLength, axisThicknessPx / 2)
+                size = Size(horizontalAxisLength, axisThicknessPx)
             )
 
         // Draw vertical axis
@@ -92,7 +92,7 @@ fun LineChart(
                 drawRect(
                     color = axisColor,
                     topLeft = Offset(leftAreaWidth.toFloat(), y),
-                    size = Size(horizontalAxisLength, axisThicknessPx / 2)
+                    size = Size(horizontalAxisLength, axisThicknessPx)
                 )
         }
 
@@ -193,7 +193,8 @@ private fun DefaultPreview() {
 //            horizontalAxisLabelColor = Color(0xFF4F4F4F),
 //            isShowVerticalAxis = false,
             verticalAxisLabelFontSize = 20.sp,
-            horizontalAxisLabelFontSize = 30.sp
+            horizontalAxisLabelFontSize = 30.sp,
+            isShowVerticalAxis = true
         )
     }
 }
