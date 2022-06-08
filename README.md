@@ -17,6 +17,8 @@ This is an open source library used to draw charts in Android with [Jetpack Comp
   implementation 'com.github.MahmoudIbrahim3:android-compose-charts:<latest-release>'
   ```
 
+*****
+
 ### 1. Bar Chart:
 
   ```kotlin
@@ -57,7 +59,52 @@ This is an open source library used to draw charts in Android with [Jetpack Comp
 ![1](https://user-images.githubusercontent.com/17904163/170347680-088d2d6f-bc57-479f-9041-2bcc7f3d2341.PNG)
 ![2](https://user-images.githubusercontent.com/17904163/170347705-ed17018d-457b-46b6-9f94-402c174487a3.PNG)
 
-****************************************************************************************************
+*****
+
+### 2. Line Chart:
+
+```kotlin
+val lineChartData = listOf(
+    LineChartEntity(150.0f, "A"),
+    LineChartEntity(250.0f, "B"),
+    LineChartEntity(50.0f, "C"),
+    LineChartEntity(300.0f, "D"),
+    LineChartEntity(400.0f, "E")
+)
+
+LineChart(
+    lineChartData = lineChartData,
+    verticalAxisValues = verticalAxisValues
+)
+```
+
+#### Custom attributes:
+
+```kotlin
+LineChart(
+    lineChartData = lineChartData2,
+    verticalAxisValues = verticalAxisValues2,
+    lineColor = Color.Red,
+    strokeWidth = 6.dp,
+    axisColor = Color(0xF0E47A8A),
+    verticalAxisLabelColor = Color.Blue,
+    verticalAxisLabelFontSize = 20.sp,
+    horizontalAxisLabelColor = Color.Black,
+    horizontalAxisLabelFontSize = 20.sp,
+    isShowVerticalAxis = true,
+    isShowHorizontalLines = true,
+)
+```
+
+#### Line Chart Samples:
+
+###### Default line chart
+![LineChart1](https://user-images.githubusercontent.com/17904163/172702483-c28b2b2c-6c1f-4db0-81a4-12ff865d6b7c.png)
+
+###### Custom line chart
+![LineChart2](https://user-images.githubusercontent.com/17904163/172702590-2d1f58ee-a99c-4564-8515-14f931dd4d78.PNG)
+
+*****
 
 #### Feel free to fork the repo and make any changes or suggestions you see and make a pull request.
 
