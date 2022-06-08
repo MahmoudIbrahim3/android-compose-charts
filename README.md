@@ -1,5 +1,7 @@
 # android-compose-charts
 
+[![](https://jitpack.io/v/MahmoudIbrahim3/android-compose-charts.svg)](https://jitpack.io/#MahmoudIbrahim3/android-compose-charts)
+
 This is an open source library used to draw charts in Android with [Jetpack Compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAjwp7eUBhBeEiwAZbHwkYOGccOYl5HZsyYQm2SfdvvnWaoBuCkQXpjob2trtRVl4MbvkzMx9BoCHsoQAvD_BwE&gclsrc=aw.ds) with a simple and easy to use. Just couples of lines.
 
 ## Usage:
@@ -12,7 +14,7 @@ This is an open source library used to draw charts in Android with [Jetpack Comp
 * Add this dependency to your app `gradle` file:
 
   ```kotlin
-  implementation 'com.github.MahmoudIbrahim3:android-compose-charts:1.0.1'
+  implementation 'com.github.MahmoudIbrahim3:android-compose-charts:<latest-release>'
   ```
 
 ### 1. Bar Chart:
