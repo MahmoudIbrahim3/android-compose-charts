@@ -5,3 +5,4 @@ import androidx.compose.ui.unit.sp
 
 val DefaultAxisLabelFontSize = 16.sp
 val DefaultAxisThickness = 1.dp
+val DefaultBarWidth = 10.dp

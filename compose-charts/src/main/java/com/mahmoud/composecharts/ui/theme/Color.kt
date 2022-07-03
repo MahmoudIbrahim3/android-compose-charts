@@ -2,6 +2,7 @@ package com.mahmoud.composecharts.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val DefaultGridLinesColor = Color(0xFFBFC0BF)
 val DefaultAxisColor = Color(0xFFBFC0BF)
 val DefaultAxisLabelColor = Color(0xFF5B5E5B)
 
