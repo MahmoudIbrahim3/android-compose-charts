@@ -9,21 +9,13 @@ import com.mahmoud.composecharts.ui.theme.DefaultBarWidth
 import com.mahmoud.composecharts.ui.theme.DefaultGridLinesColor
 
 data class ChartElements(
-    val showVerticalAxis: Boolean = true,
-    val showHorizontalAxis: Boolean = true,
-    val showDataLabels: Boolean = true,
+    val showVerticalLine: Boolean = false,
     val showGridLines: Boolean = true,
+    val showHorizontalLabels: Boolean = true,
+    val showLegend: Boolean = true,
     val gridLinesColor: Color = DefaultGridLinesColor,
     val labelColor: Color = DefaultAxisLabelColor,
-    val showLegend: Boolean = true,
-    val fontSize: TextUnit = DefaultAxisLabelFontSize,
     val barWidth: Dp = DefaultBarWidth,
+    val legendWidth: Dp = DefaultBarWidth,
+    val fontSize: TextUnit = DefaultAxisLabelFontSize,
 )
-
-//enum class Position(val position: Int) {
-//    NON(0),
-//    TOP(1),
-//    BOTTOM(2),
-//    LEFT(3),
-//    RIGHT(4)
-//}

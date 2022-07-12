@@ -3,14 +3,19 @@ package com.mahmoud.composechartssamples
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mahmoud.composecharts.ChartElements
 import com.mahmoud.composecharts.barchart.BarChart
+import com.mahmoud.composecharts.columnchart.ColumnChart
 import com.mahmoud.composecharts.linechart.LineChart
 import com.mahmoud.composechartssamples.data.*
 import com.mahmoud.composechartssamples.ui.theme.AndroidComposeChartsTheme
@@ -116,6 +121,43 @@ private fun Preview_LineChart_CustomAttributes() {
             horizontalAxisLabelFontSize = 20.sp,
             isShowVerticalAxis = true,
             isShowHorizontalLines = true,
+        )
+    }
+}
+
+/**
+ * Column Chart Previews
+ */
+@Preview(showBackground = true)
+@Composable
+private fun Preview_ColumnChart_Default() {
+    AndroidComposeChartsTheme {
+        ColumnChart(
+            modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 8.dp),
+            seriesData = columnChartSeriesData,
+            categories = columnChartCategoriesData,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview_ColumnChart_CustomAttributes() {
+    AndroidComposeChartsTheme {
+        ColumnChart(
+            seriesData = columnChartSeriesData2,
+            categories = columnChartCategoriesData2,
+            chartElements = ChartElements(
+                showVerticalLine = true,
+                showGridLines = true,
+                showHorizontalLabels = false,
+                showLegend = false,
+                gridLinesColor = Color.DarkGray,
+                labelColor = Color.Blue,
+                barWidth = 20.dp,
+                legendWidth = 6.dp,
+                fontSize = 16.sp
+            )
         )
     }
 }

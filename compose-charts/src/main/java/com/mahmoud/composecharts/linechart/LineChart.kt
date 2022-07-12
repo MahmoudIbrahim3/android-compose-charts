@@ -192,9 +192,9 @@ private fun DefaultPreview() {
 //            verticalAxisLabelColor = Color(0xFFA6A6A6),
 //            horizontalAxisLabelColor = Color(0xFF4F4F4F),
 //            isShowVerticalAxis = false,
-            verticalAxisLabelFontSize = 20.sp,
-            horizontalAxisLabelFontSize = 30.sp,
-            isShowVerticalAxis = true
+//            verticalAxisLabelFontSize = 20.sp,
+//            horizontalAxisLabelFontSize = 30.sp,
+//            isShowVerticalAxis = true
         )
     }
 }

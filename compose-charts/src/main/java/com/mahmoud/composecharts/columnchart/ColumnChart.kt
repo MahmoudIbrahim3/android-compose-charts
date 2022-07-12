@@ -12,31 +12,32 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mahmoud.composecharts.ChartElements
 import com.mahmoud.composecharts.dpToPx
 import com.mahmoud.composecharts.textUnitToPx
 import com.mahmoud.composecharts.ui.theme.*
-import kotlin.math.max
 import kotlin.math.pow
 
 @Composable
 fun ColumnChart(
     modifier: Modifier = Modifier
-        .padding(top = 16.dp, bottom = 16.dp),
+        .padding(top = 16.dp, bottom = 8.dp),
     seriesData: List<SeriesData>,
     categories: List<String>,
     chartElements: ChartElements = ChartElements()
 ) {
     val verticalAxisData = findVerticalAxisData(seriesData)
-    var verticalAxisLength: Float? = null
 
     val mModifier = modifier.aspectRatio(1f)
 
-    var bottomAreaHeight = textUnitToPx(chartElements.fontSize)
-    if(chartElements.showLegend)
-        bottomAreaHeight+= dpToPx(chartElements.barWidth)
+    var bottomAreaHeight = 0f
 
-//    verticalAxisLength = findVerticalAxisLength(chartElements.fontSize.toPx(), size.height)
+    if (chartElements.showHorizontalLabels)
+        bottomAreaHeight += textUnitToPx(chartElements.fontSize) + dpToPx(8.dp)
+
+    if (chartElements.showLegend)
+        bottomAreaHeight += dpToPx(chartElements.legendWidth) + dpToPx(8.dp)
 
     val fontSizeInPx = textUnitToPx(chartElements.fontSize)
     val leftAreaWidth = convertStringLengthIntoPx(
@@ -44,7 +45,7 @@ fun ColumnChart(
         fontSizeInPx
     )
 
-    drawCharsElements(
+    drawChartsElements(
         mModifier,
         chartElements,
         verticalAxisData,
@@ -65,11 +66,11 @@ fun ColumnChart(
     )
 }
 
-fun convertStringLengthIntoPx(text: String, fontSizeInPx: Float) =
+private fun convertStringLengthIntoPx(text: String, fontSizeInPx: Float) =
     (text.length * fontSizeInPx.div(1.75)).toInt()
 
 @Composable
-fun drawColumns(
+private fun drawColumns(
     modifier: Modifier,
     chartElements: ChartElements,
     seriesData: List<SeriesData>,
@@ -84,16 +85,21 @@ fun drawColumns(
 
         val period = (size.width - leftAreaWidth) / findMaxSeriesLength(seriesData)
 
-        var start = 0f
+        var start: Float
         val barWidth = chartElements.barWidth.toPx()
+        val spaceBetweenColumns = barWidth.div(5)
 
         for (seriesIndex in seriesData.indices) {
-            start = barWidth.times(seriesIndex) +
-                    period.div(2) - seriesData.size.times(barWidth).div(2) // To makes the columns centered in the view
+            start = leftAreaWidth +
+                    barWidth.times(seriesIndex) +
+                    spaceBetweenColumns.times(seriesIndex) +
+                    period.div(2) -
+                    seriesData.size.times(barWidth + spaceBetweenColumns).div(2) // To makes the columns centered in the view
+
             for (index in seriesData[seriesIndex].series.indices) {
                 val series = seriesData[seriesIndex]
 
-                val x = leftAreaWidth + period.times(index) + start
+                val x = start + period.times(index)
 
                 val barHeightPercentage = (series.series[index] / maxAxisValue)
                 val barHeightInPixel = barHeightPercentage * verticalAxisLength
@@ -109,7 +115,7 @@ fun drawColumns(
     }
 }
 
-fun findMaxSeriesLength(seriesData: List<SeriesData>): Int {
+private fun findMaxSeriesLength(seriesData: List<SeriesData>): Int {
     var maxLength = Int.MIN_VALUE
     seriesData.forEach {
         if(it.series.size > maxLength)
@@ -119,7 +125,7 @@ fun findMaxSeriesLength(seriesData: List<SeriesData>): Int {
 }
 
 @Composable
-fun drawCharsElements(
+private fun drawChartsElements(
     modifier: Modifier?,
     chartElements: ChartElements,
     verticalAxisData: List<Float>,
@@ -139,18 +145,34 @@ fun drawCharsElements(
         val horizontalAxisLength = size.width - leftAreaWidth
         val distanceBetweenVerticalAxisValues = (verticalAxisLength / (verticalAxisData.size - 1))
 
-        // Draw vertical axis values & horizontal lines
+        // Draw vertical line
+        if (chartElements.showVerticalLine)
+            drawRect(
+                color = chartElements.gridLinesColor,
+                topLeft = Offset(leftAreaWidth.toFloat(), 0.0f),
+                size = Size(axisThicknessPx, verticalAxisLength)
+            )
+
+        // Draw horizontal line
+        if (chartElements.showGridLines.not())
+            drawRect(
+                color = chartElements.gridLinesColor,
+                topLeft = Offset(leftAreaWidth.toFloat(), verticalAxisLength),
+                size = Size(horizontalAxisLength, axisThicknessPx)
+            )
+
+        // Draw vertical axis values & horizontal gridlines
         for (index in verticalAxisData.indices) {
 
             val x = (leftAreaWidth / 2).toFloat()
             val y = verticalAxisLength - (distanceBetweenVerticalAxisValues).times(index)
 
-            // Draw vertical axis value
+            // Vertical axis value
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
                     verticalAxisData[index].toString(),
                     x,
-                    y + fontSizeInPx / 2,
+                    y + fontSizeInPx / 2.7f,
                     Paint().apply {
                         textSize = fontSizeInPx
                         color = chartElements.labelColor.toArgb()
@@ -159,7 +181,7 @@ fun drawCharsElements(
                 )
             }
 
-            // Draw horizontal line
+            // Horizontal line
             if (chartElements.showGridLines)
                 drawRect(
                     color = chartElements.gridLinesColor,
@@ -169,77 +191,81 @@ fun drawCharsElements(
         }
 
         // Draw horizontal axis labels
-        val period = (size.width - leftAreaWidth) / categories.size
-        val start = period.div(2) + leftAreaWidth
-        val y = verticalAxisLength + fontSizeInPx.times(1.2).toInt()
+        if (chartElements.showHorizontalLabels) {
+            val period = (size.width - leftAreaWidth) / categories.size
+            val start = period.div(2) + leftAreaWidth
+            val y = verticalAxisLength + fontSizeInPx.times(1.2).toInt()
 
-        for (index in categories.indices) {
-            val x = start + period.times(index)
-            if (categories[index].isNotEmpty()) {
-                drawContext.canvas.nativeCanvas.apply {
-                    drawText(
-                        categories[index],
-                        x,
-                        y,
-                        Paint().apply {
-                            textSize = fontSizeInPx
-                            color = chartElements.labelColor.toArgb()
-                            textAlign = Paint.Align.CENTER
-                        }
-                    )
+            for (index in categories.indices) {
+                val x = start + period.times(index)
+                if (categories[index].isNotEmpty()) {
+                    drawContext.canvas.nativeCanvas.apply {
+                        drawText(
+                            categories[index],
+                            x,
+                            y,
+                            Paint().apply {
+                                textSize = fontSizeInPx
+                                color = chartElements.labelColor.toArgb()
+                                textAlign = Paint.Align.CENTER
+                            }
+                        )
+                    }
                 }
             }
         }
 
         // Draw legends
-        val barWidth = chartElements.barWidth.toPx()
-        val legendFontSizePx = fontSizeInPx.div(1.5f)
+        if (chartElements.showLegend) {
+            val legendWidth = chartElements.legendWidth.toPx()
+            val legendFontSizePx = fontSizeInPx.div(1.5f)
 
-        var legendWidth = 0.0f
-        for (series in seriesData.iterator()) {
-            val stringLength = convertStringLengthIntoPx(series.seriesName, legendFontSizePx)
-            legendWidth += barWidth + stringLength.div(2) + stringLength.div(2) + barWidth
-        }
-        val startXOfLegend = (size.width - legendWidth) / 2
-
-        var legendX = startXOfLegend + barWidth
-        val legendY = size.height
-
-        for (series in seriesData.iterator()) {
-
-            drawRect(
-                color = series.color,
-                topLeft = Offset(legendX, legendY),
-                size = Size(barWidth, barWidth)
-            )
-
-            val stringLength = convertStringLengthIntoPx(series.seriesName, legendFontSizePx)
-            legendX += barWidth + stringLength.div(2)
-
-            drawContext.canvas.nativeCanvas.apply {
-                drawText(
-                    series.seriesName,
-                    legendX,
-                    legendY + barWidth.div(1.2f),
-                    Paint().apply {
-                        textSize = legendFontSizePx
-                        color = chartElements.labelColor.toArgb()
-                        textAlign = Paint.Align.CENTER
-                    }
-                )
+            var legendSectionWidth = 0.0f
+            for (series in seriesData.iterator()) {
+                val stringLength = convertStringLengthIntoPx(series.seriesName, legendFontSizePx)
+                legendSectionWidth += legendWidth + stringLength.div(2) + stringLength.div(2) + legendWidth
             }
+            val startXOfLegend = (size.width - legendSectionWidth) / 2
 
-            legendX += stringLength.div(2) + barWidth
+            var legendX = startXOfLegend + legendWidth
+            val legendY = size.height - legendWidth
+
+            for (series in seriesData.iterator()) {
+
+                drawRect(
+                    color = series.color,
+                    topLeft = Offset(legendX, legendY),
+                    size = Size(legendWidth, legendWidth)
+                )
+
+                val stringLength = convertStringLengthIntoPx(series.seriesName, legendFontSizePx)
+                legendX += legendWidth + stringLength.div(2)
+
+                drawContext.canvas.nativeCanvas.apply {
+                    drawText(
+                        series.seriesName,
+                        legendX,
+                        legendY + legendFontSizePx.div(3) + legendWidth.div(2),
+                        Paint().apply {
+                            textSize = legendFontSizePx
+                            color = chartElements.labelColor.toArgb()
+                            textAlign = Paint.Align.CENTER
+                        }
+                    )
+                }
+
+                legendX += stringLength.div(2) + legendWidth
+            }
         }
     }
 }
 
-fun findAxisHeight(height: Float, bottomAreaHeight: Float): Float {
+private fun findAxisHeight(height: Float, bottomAreaHeight: Float): Float {
     return height - bottomAreaHeight
 }
 
 @Composable
-fun findVerticalAxisData(seriesData: List<SeriesData>): List<Float> {
+private fun findVerticalAxisData(seriesData: List<SeriesData>): List<Float> {
     val data = ArrayList<Float>()
     var maxValue = 0.0f
     for(series in seriesData.iterator()) {
@@ -268,15 +294,25 @@ fun findVerticalAxisData(seriesData: List<SeriesData>): List<Float> {
 private fun DefaultPreview() {
     AndroidComposeChartsTheme {
         val seriesData = listOf(
-            SeriesData(listOf(4.5f, 2.5f, 3f), Color.Blue, "Series1"),
-            SeriesData(listOf(5f, 2f, 3f, 12f), Color.Red, "Series2"),
-            SeriesData(listOf(2f, 4f, 6f), Color.Green, "Series3"),
-            SeriesData(listOf(2f, 4f, 6f, 8f), Color.Black, "Series4"),
+            SeriesData(listOf(4f, 2.5f, 3.5f, 4.5f), Color(0xff4472c4), "Series1"),
+            SeriesData(listOf(2.5f, 4.5f, 1.5f, 3f), Color(0xffed7d31), "Series3"),
+            SeriesData(listOf(2.0f, 2f, 3f, 5f), Color.Gray, "Series4"),
         )
 
         ColumnChart(
             seriesData = seriesData,
-            categories = listOf("C1", "C2", "C3", "C4")
+            categories = listOf("C1", "C2", "C3", "C4"),
+            chartElements = ChartElements(
+//                showVerticalLine = true,
+//                showGridLines = true,
+//                showHorizontalLabels = true,
+//                showLegend = false,
+//                gridLinesColor = Color.Green,
+//                labelColor = Color.Blue,
+//                barWidth = 40.dp,
+//                legendWidth = 20.dp,
+//                fontSize = 30.sp
+            )
         )
     }
 }
