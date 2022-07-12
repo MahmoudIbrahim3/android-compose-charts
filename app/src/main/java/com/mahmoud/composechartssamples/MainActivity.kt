@@ -133,7 +133,6 @@ private fun Preview_LineChart_CustomAttributes() {
 private fun Preview_ColumnChart_Default() {
     AndroidComposeChartsTheme {
         ColumnChart(
-            modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 8.dp),
             seriesData = columnChartSeriesData,
             categories = columnChartCategoriesData,
         )
@@ -145,6 +144,7 @@ private fun Preview_ColumnChart_Default() {
 private fun Preview_ColumnChart_CustomAttributes() {
     AndroidComposeChartsTheme {
         ColumnChart(
+            modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 8.dp),
             seriesData = columnChartSeriesData2,
             categories = columnChartCategoriesData2,
             chartElements = ChartElements(
@@ -153,8 +153,8 @@ private fun Preview_ColumnChart_CustomAttributes() {
                 showHorizontalLabels = false,
                 showLegend = false,
                 gridLinesColor = Color.DarkGray,
-                labelColor = Color.Blue,
-                barWidth = 20.dp,
+                labelColor = Color.Black,
+                barWidth = 40.dp,
                 legendWidth = 6.dp,
                 fontSize = 16.sp
             )
