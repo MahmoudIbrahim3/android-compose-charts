@@ -36,6 +36,13 @@ class MainActivity : ComponentActivity() {
                     }
 
                     item {
+                        LineChart(
+                            lineChartData = lineChartData,
+                            verticalAxisValues = verticalAxisValues
+                        )
+                    }
+
+                    item {
                         ColumnChart(
                             seriesData = columnChartSeriesData,
                             categories = columnChartCategoriesData,
@@ -155,12 +162,12 @@ private fun Preview_ColumnChart_Default() {
 private fun Preview_ColumnChart_CustomAttributes() {
     AndroidComposeChartsTheme {
         ColumnChart(
-            modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 8.dp),
+            modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
             seriesData = columnChartSeriesData2,
             categories = columnChartCategoriesData2,
             chartElements = ChartElements(
                 showVerticalLine = true,
-                showGridLines = true,
+                showGridLines = false,
                 showHorizontalLabels = false,
                 showLegend = false,
                 gridLinesColor = Color.DarkGray,
