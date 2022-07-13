@@ -106,6 +106,62 @@ LineChart(
 
 *****
 
+### 3. Column Chart:
+
+```kotlin
+val columnChartSeriesData = listOf(
+    SeriesData(listOf(4f, 2.5f, 3.5f, 4.5f), Color(0xff4472c4), "Series1"),
+    SeriesData(listOf(2.5f, 4.5f, 1.5f, 3f), Color(0xffed7d31), "Series3"),
+    SeriesData(listOf(2.0f, 2f, 3f, 5f), Color(0xFF8BC34A), "Series3"),
+)
+
+val columnChartCategoriesData = listOf("Cat1", "Cat2", "Cat3", "Cat4")
+
+ColumnChart(
+    seriesData = columnChartSeriesData,
+    categories = columnChartCategoriesData,
+)
+```
+
+#### Custom attributes:
+
+```kotlin
+val columnChartSeriesData2 = listOf(
+    SeriesData(listOf(4f, 3.5f), Color.Red, "Series1"),
+    SeriesData(listOf(1.5f, 4.5f), Color.Green, "Series2")
+)
+
+val columnChartCategoriesData2 = listOf("Category1", "Category2")
+
+ColumnChart(
+    modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
+    seriesData = columnChartSeriesData2,
+    categories = columnChartCategoriesData2,
+    chartElements = ChartElements(
+        showVerticalLine = true,
+        showGridLines = false,
+        showHorizontalLabels = false,
+        showLegend = false,
+        gridLinesColor = Color.DarkGray,
+        labelColor = Color.Black,
+        barWidth = 40.dp,
+        legendWidth = 6.dp,
+        fontSize = 16.sp
+    )
+)
+```
+
+
+#### Column Chart Samples:
+
+###### Default column chart
+![ColumnChart1](https://user-images.githubusercontent.com/17904163/178757019-dff11122-fc28-4208-9798-5c4e37fe79ca.png)
+
+###### Custom column chart
+![ColumnChart2](https://user-images.githubusercontent.com/17904163/178757013-669f818b-b70e-490e-a81f-1a0ffbdcf627.png)
+
+*****
+
 #### Feel free to fork the repo and make any changes or suggestions you see and make a pull request.
 
 #### Wait a lot of other types of charts using compose, coming soon Insha-Allah :)
