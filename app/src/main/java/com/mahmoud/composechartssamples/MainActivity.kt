@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -25,11 +27,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidComposeChartsTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    BarChart(
-                        barChartData = barChartData,
-                        verticalAxisValues = verticalAxisValues,
-                    )
+                LazyColumn() {
+                    item {
+                        BarChart(
+                            barChartData = barChartData,
+                            verticalAxisValues = verticalAxisValues,
+                        )
+                    }
+
+                    item {
+                        ColumnChart(
+                            seriesData = columnChartSeriesData,
+                            categories = columnChartCategoriesData,
+                        )
+                    }
                 }
             }
         }
